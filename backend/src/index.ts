@@ -1,7 +1,7 @@
 import Fastify from 'fastify'
 import cors from '@fastify/cors'
 import pg from 'pg'
-import Redis from 'ioredis'
+import { Redis } from 'ioredis'
 
 const { Pool } = pg
 
