@@ -1,7 +1,7 @@
 # Push N Pray manifest — example-app
 #
 # Replace 'YOUR-PROJECT-ID-HERE' with the UUID returned by `pushnpray init`.
-project-id = 'YOUR-PROJECT-ID-HERE'
+project-id = '824f4a7b-00f3-4a90-a4cf-6b868630652b'
 app-update-strategy = 'recreate'
 
 # ── Applications ──────────────────────────────────────────────────────────────
