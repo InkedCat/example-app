@@ -16,7 +16,6 @@ app-update-strategy = 'recreate'
 name = 'backend'
 dockerfile = 'backend/Dockerfile'
 context = 'backend/'
-port = 3000
 allow-origin-from = 'frontend'
 
 # Frontend: plain static files served by nginx.
