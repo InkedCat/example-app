@@ -2,7 +2,7 @@
 #
 # Replace 'YOUR-PROJECT-ID-HERE' with the UUID returned by `pushnpray init`.
 project-id = '715f9760-7255-4428-a16c-86318760c898'
-app-update-strategy = 'recreate'
+app-update-strategy = 'rolling'
 
 # ── Applications ──────────────────────────────────────────────────────────────
 
