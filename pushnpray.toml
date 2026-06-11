@@ -22,7 +22,7 @@ allow-origin-from = 'frontend'
 # No Dockerfile required — Push N Pray wraps it automatically.
 [[apps.static]]
 name = 'frontend'
-path = 'frontend/'
+path = 'frontend'
 
 # ── Managed Services ──────────────────────────────────────────────────────────
 # Credentials are auto-generated and injected as env vars into the listed apps.
