@@ -14,8 +14,8 @@ app-update-strategy = 'recreate'
 # origin is automatically allowed to call this backend.
 [[apps.dockerfile]]
 name = 'backend'
-dockerfile = 'example-app/backend/Dockerfile'
-context = 'example-app/backend/'
+dockerfile = 'backend/Dockerfile'
+context = 'backend/'
 port = 3000
 allow-origin-from = 'frontend'
 
@@ -23,7 +23,7 @@ allow-origin-from = 'frontend'
 # No Dockerfile required — Push N Pray wraps it automatically.
 [[apps.static]]
 name = 'frontend'
-path = 'example-app/frontend/'
+path = 'frontend/'
 
 # ── Managed Services ──────────────────────────────────────────────────────────
 # Credentials are auto-generated and injected as env vars into the listed apps.
