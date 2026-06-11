@@ -1,0 +1,43 @@
+# Push N Pray manifest — example-app
+#
+# Replace 'YOUR-PROJECT-ID-HERE' with the UUID returned by `pushnpray init`.
+project-id = 'YOUR-PROJECT-ID-HERE'
+app-update-strategy = 'recreate'
+
+# ── Applications ──────────────────────────────────────────────────────────────
+
+[apps]
+
+# Backend: built from source via Dockerfile.
+# Push N Pray will build the image and expose it on port 3000.
+# allow-origin-from wires up Traefik CORS middleware so the frontend
+# origin is automatically allowed to call this backend.
+[[apps.dockerfile]]
+name = 'backend'
+dockerfile = 'example-app/backend/Dockerfile'
+context = 'example-app/backend/'
+port = 3000
+allow-origin-from = 'frontend'
+
+# Frontend: plain static files served by nginx.
+# No Dockerfile required — Push N Pray wraps it automatically.
+[[apps.static]]
+name = 'frontend'
+path = 'example-app/frontend/'
+
+# ── Managed Services ──────────────────────────────────────────────────────────
+# Credentials are auto-generated and injected as env vars into the listed apps.
+
+[services]
+
+# Postgres 18 — credentials injected as:
+#   POSTGRES_DB_HOST, POSTGRES_DB_PORT, POSTGRES_DB_USER, POSTGRES_DB_PASSWORD
+[[services.postgres]]
+name = 'db'
+used-by = ['backend']
+
+# Redis — credentials injected as:
+#   REDIS_CACHE_HOST, REDIS_CACHE_PORT, REDIS_CACHE_PASSWORD
+[[services.redis]]
+name = 'cache'
+used-by = ['backend']

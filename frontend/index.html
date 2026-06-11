@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Push N Pray — Demo</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, sans-serif;
+      background: #0f0f0f;
+      color: #e2e2e2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+
+    h1 { font-size: 1.8rem; margin-bottom: 0.25rem; }
+    p.sub { color: #888; font-size: 0.9rem; margin-bottom: 2rem; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+    }
+
+    .card h2 { font-size: 1rem; margin-bottom: 0.75rem; color: #a78bfa; }
+
+    button {
+      display: inline-block;
+      padding: 0.45rem 1rem;
+      background: #4f46e5;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: background 0.15s;
+    }
+    button:hover { background: #4338ca; }
+    button:disabled { background: #333; cursor: not-allowed; }
+
+    pre {
+      margin-top: 0.75rem;
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 6px;
+      padding: 0.75rem;
+      font-size: 0.8rem;
+      white-space: pre-wrap;
+      word-break: break-all;
+      min-height: 3rem;
+      color: #86efac;
+    }
+
+    pre.error { color: #f87171; }
+
+    .config {
+      width: 100%;
+      max-width: 900px;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .config label { font-size: 0.85rem; color: #888; white-space: nowrap; }
+    .config input {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.4rem 0.75rem;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      color: #e2e2e2;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Push N Pray</h1>
+  <p class="sub">Minimal frontend + backend demo — Fastify / Postgres / Redis</p>
+
+  <div class="config">
+    <label for="apiUrl">Backend URL:</label>
+    <input
+      id="apiUrl"
+      type="text"
+      placeholder="https://backend-&lt;slug&gt;-&lt;projectId&gt;.pushnpray.polydo.dev"
+      value=""
+    />
+  </div>
+
+  <div class="grid">
+    <!-- Health -->
+    <div class="card">
+      <h2>GET /health</h2>
+      <button onclick="call('/health', 'res-health')">Check health</button>
+      <pre id="res-health">—</pre>
+    </div>
+
+    <!-- Postgres -->
+    <div class="card">
+      <h2>GET /db-check</h2>
+      <button onclick="call('/db-check', 'res-db')">Query Postgres</button>
+      <pre id="res-db">—</pre>
+    </div>
+
+    <!-- Redis -->
+    <div class="card">
+      <h2>GET /cache-check</h2>
+      <button onclick="call('/cache-check', 'res-cache')">Read/write Redis</button>
+      <pre id="res-cache">—</pre>
+    </div>
+  </div>
+
+  <script>
+    async function call(path, resultId) {
+      const base = document.getElementById('apiUrl').value.replace(/\/$/, '')
+      if (!base) {
+        alert('Set the backend URL first.')
+        return
+      }
+      const el = document.getElementById(resultId)
+      el.className = ''
+      el.textContent = 'Loading…'
+      try {
+        const res = await fetch(base + path)
+        const json = await res.json()
+        el.textContent = JSON.stringify(json, null, 2)
+        if (!res.ok) el.className = 'error'
+      } catch (err) {
+        el.className = 'error'
+        el.textContent = err.message
+      }
+    }
+  </script>
+</body>
+</html>
