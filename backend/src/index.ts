@@ -70,7 +70,7 @@ app.get('/cache-check', async (_request, reply) => {
 })
 
 // ── Start ─────────────────────────────────────────────────────────────────────
-const port = Number(process.env.PORT ?? 3000)
+const port = Number(process.env.PORT ?? 80)
 const host = process.env.HOST ?? '0.0.0.0'
 
 try {
