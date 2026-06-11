@@ -20,7 +20,7 @@ allow-origin-from = 'frontend'
 
 # Frontend: plain static files served by nginx.
 # No Dockerfile required — Push N Pray wraps it automatically.
-[[apps.static]]
+[[apps.staticweb]]
 name = 'frontend'
 path = 'frontend'
 
